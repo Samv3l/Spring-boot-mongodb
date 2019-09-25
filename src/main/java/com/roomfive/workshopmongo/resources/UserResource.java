@@ -17,6 +17,8 @@ import com.roomfive.workshopmongo.domain.User;
 import com.roomfive.workshopmongo.dto.UserDTO;
 import com.roomfive.workshopmongo.services.UserService;
 
+import ch.qos.logback.core.status.Status;
+
 @RestController
 @RequestMapping(value = "/users")
 public class UserResource {
@@ -49,6 +51,13 @@ public class UserResource {
 		user = service.insert(user);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}" ,method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable String id) {
+
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 
 }
